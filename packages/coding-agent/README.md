@@ -1,8 +1,8 @@
 <p align="center">
   <a href="https://primeintellect.ai">
     <picture>
-      <source media="(prefers-color-scheme: dark)" srcset="../../assets/brand/prime-butterfly.svg">
-      <img alt="Prime Intellect butterfly mark" src="../../assets/brand/prime-butterfly-black.svg" width="96">
+      <source media="(prefers-color-scheme: dark)" srcset="../../assets/brand/spider.svg">
+      <img alt="spider mark" src="../../assets/brand/spider-black.svg" width="96">
     </picture>
   </a>
 </p>

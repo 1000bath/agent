@@ -1,0 +1,89 @@
+# Development
+
+See the repository [AGENTS.md](../../../AGENTS.md) for the current contribution rules and required validation.
+
+## Setup
+
+Dek Agent requires Node.js 22.8.0 or newer.
+
+```bash
+git clone <dek-agent-repository-url>
+cd dek-agent
+npm ci
+```
+
+Run from source:
+
+```bash
+/path/to/dek-agent/dek-agent.sh
+```
+
+The source launcher is `dek-agent.sh`; the runtime is currently Dek Agent-compatible and is being integrated into the Dek ecosystem. The script can be called from any directory and preserves the caller's working directory. Use that behavior to run a source checkout against a separate test project.
+
+## Dek Development Notes
+
+`dek-agent` is the maintained repository/package name. Dek Agent names remain in launcher commands, upstream source paths, and compatibility metadata until the Dek CLI rename is completed. Do not rename protocol or config keys without a migration plan.
+
+The sibling packages are `../dek-memory` and `../dek-gateway`; integrate through their public APIs.
+
+## Product and Source Names
+
+Dek Agent is the product, public CLI, release artifact, and repository name. The monorepo still retains inherited `@earendil-works/pi-*` npm workspace names, a source-package `pi` bin entry, the `pi` package manifest key, and some `PI_*` compatibility environment variables. These names are source and compatibility details, not a signal that contributors should install or develop against pi-mono.
+
+Public releases are currently versioned tarball artifacts installed by the stable and beta installer scripts. `scripts/pack-dek-agent-release.mjs` rewrites the coding-agent package name, executable, config metadata, and internal dependency URLs for that distribution. Do not document the inherited npm workspace package as the public Dek Agent install path.
+
+## Local Configuration
+
+User configuration lives under `~/.prime/agent/`. Project-local settings, prompts, themes, extensions, skills, and system-prompt files live under `.prime/agent/` in the project root. Override the user config directory with `PRIME_AGENT_CODING_AGENT_DIR` and the session directory with `PRIME_AGENT_SESSION_DIR`.
+
+Use an isolated config directory when manually exercising daemon behavior so development sessions do not collide with normal sessions:
+
+```bash
+PRIME_AGENT_CODING_AGENT_DIR=/tmp/dek-agent-dev /path/to/dek-agent/dek-agent.sh
+```
+
+## Daemon Protocol Changes
+
+Classify every daemon command, event, or response-shape change as backward-compatible, capability-gated, or incompatible. Optional behavior must be negotiated and degrade locally. Follow the protocol-version, schema-revision, compatibility-map, and cross-version test requirements in the root `AGENTS.md` before changing the wire contract.
+
+## Package Asset Resolution
+
+Dek Agent runs from source, Node.js package output, and standalone release artifacts. Always use `src/config.ts` helpers for package assets:
+
+```typescript
+import { getPackageDir, getThemeDir } from "./config.js";
+```
+
+Do not resolve packaged assets directly from `__dirname`.
+
+## Debugging
+
+The hidden `/debug` command writes `~/.prime/agent/dek-agent-debug.log` with rendered TUI lines, their visible widths, and the current agent messages. Daemon, worker, client, and provider diagnostic logs live under `~/.prime/agent/logs/`.
+
+Useful service commands:
+
+```bash
+dek-agent status
+dek-agent doctor
+dek-agent doctor --fix
+dek-agent shutdown
+```
+
+## Validation
+
+After code changes, run the repository check from the root:
+
+```bash
+npm run check
+```
+
+This performs formatting, linting, type checking, installer rendering checks, and the browser smoke check. It does not run the test suite.
+
+Run focused tests from the package root. For example:
+
+```bash
+cd packages/coding-agent
+npx tsx ../../node_modules/vitest/dist/cli.js --run test/specific.test.ts
+```
+
+If you create or modify a test file, run that file and iterate until it passes. Coding-agent suite regressions belong under `test/suite/regressions/` and use the suite harness and faux provider rather than live provider credentials.

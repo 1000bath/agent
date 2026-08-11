@@ -1,25 +1,24 @@
 /**
- * Pre-rendered Unicode raster logo used by the interactive UI.
- *
- * The mark follows the detailed Braille/block-art style from the reference
- * instead of the earlier coarse ASCII silhouette.
+ * Detailed Braille/raster spider logo for the interactive UI.
+ * Supplied spider artwork, retained at its original scale and spacing.
  */
-export const SPIDER_LOGO = ` ⢰⣤⣤⣄⣀⡀ ⣀⡀                             ⣀⡀ ⣀⣀⣤⣤⣴
-    ⠉⠉⠛⠻⣿⣿⣤⣀                        ⢀⣠⣼⣿⡿⠛⠋⠉⠁
-          ⠈⠙⠻⢶⣤⣤⣄     ⣀⣤⣤⣄⡀    ⢀⣤⣤⣴⠾⠛⠉
-              ⠘⠿⠿⢶⣤⡀⣴⣿⣿⣿⣿⣿⣿⣷⡄⣠⣴⠾⠿⠟
-     ⢀⣤⣄⣀⣀⣀⣀⣀⣤⣄   ⠈⣿⣿⠿⢿⣿⣿⠿⢿⣿⣿⡏   ⢀⣤⣄⣀⣀⣀⣀⣀⣤⣄
- ⣀⣠⣤⠶⠟⠿⠟⠛⠛⠛⠛⠛⠿⠟⠛⠷⠶⢾⣿⡇  ⣿⡇  ⣿⣿⣿⠶⠶⠟⠛⠿⠟⠛⠛⠛⠛⠛⠿⠟⠷⢦⣤⣀⡀
- ⠋⠉               ⢸⣿⣿⣶⣾⣿⣿⣶⣾⣿⣿⣿               ⠈⠉⠃
-            ⢀⣤⣄⣠⣤⡴⠾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⣤⣤⣀⣤⣄
-          ⣠⣴⠾⠿⠟⠉   ⠈⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡝⠿⠿⢶⣤⡀
-      ⣴⣶⡶⠟⠋      ⣀⣤⣾⡿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷   ⠈⠛⠷⣶⣶⡄
-   ⣀⣴⣿⠟⠛⠁      ⢀⣼⣿⡿⠁ ⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿      ⠙⠛⢿⣷⣄⡀
- ⢴⣾⠿⠋        ⢀⣴⣿⠟⠁   ⠸⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⣄        ⠈⠻⢿⣶⠄
-  ⠁        ⣠⣾⣿⡟⠁      ⠘⠿⣿⣿⣿⣿⣿⣿⣿⠿⠃⠙⣿⣿⣦⡀        ⠁
-        ⠠⣴⣿⠟⠋⠉          ⠈⠉⠛⠛⠛⠉⠁   ⠈⠉⠛⢿⣷⡤`;
+export const SPIDER_LOGO = `⠀          ⣀⣀⢀⣀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀     ⣀⣀⢀⣀⠀⠀⠀
+⠀⠀⠀⠀⣸⠈⢣⡉⠉⠙⠚⠙⢷⠀⠀⠀⠀⣰⢾⠓⠛⠉⢉⡽⠀⣧⠀⠀⠀⠀
+⠀⠀⠀⣰⠋⠀⠀⣹⣧⣆⣠⣀⡼⣆⠀⢀⣴⢿⣲⣤⣤⡤⡏⠀⠀⠘⣆⠀⠀⠀
+⠠⣀⡴⠃⠀⠀⣴⡿⠙⢿⣇⡀⠀⠸⣎⢨⠏⠀⠀⣁⡼⠁⢱⡀⠀⠀⠘⢦⣀⡤
+⠀⠈⢿⠲⢤⣰⠟⢁⣠⣾⠿⣿⣿⣯⣿⣯⠿⣿⣿⡿⣟⠀⠀⠑⣤⠤⠒⡿⠁⠀
+⠀⠀⠈⢧⠀⠹⡉⢻⣟⣻⣆⣩⣾⣍⣿⡿⣄⣾⣟⢀⣿⣶⠞⢉⠇⠀⡼⠁⠀⠀
+⠀⠀⠀⢸⡂⢀⣇⠀⣹⠉⠛⣿⣿⡿⢿⡿⣿⣿⣿⠋⣠⡿⡆⢸⠀⢠⡇⠀⠀⠀
+⠀⠀⠀⢸⡁⣼⣿⣿⣟⣷⣾⠿⣿⣦ ⠀⣴⣿⣿⠿⣿⣻⣁⣘⣄⠠⡇⠀⠀⠀
+⠀⠈⠉⠛⢬⡉⠒⠿⣋⠙⣷⣬⠿⣷⣾⢿⣇⣽⣿⣣⠔⠒⠉⡬⠟⠉⠙⠀⠀
+⠀⠀⠀⠀⠀⠀⠙⢆⠀⠈⢆⣼⠟⣶⡸⣟⡾⢽⣿⡟⠁⠀⣰⠋⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠈⢧⠀⡼⠿⢧⡟⢷⣯⢱⡬⠿⢿⠀⡼⠃⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠘⣿⡁⠀⠀⠙⣿⣻⠇⠀⠀⢈⣷⠃⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠘⠁⠉⠓⢦⣀⠘⡏⢀⡴⠚⠉⠀⠃⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠘⢮⣿⠋⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀`;
 
-/** Compact alias for callers that need the standard splash mark. */
+/** The supplied artwork is already compact enough for splash screens. */
 export const SPIDER_LOGO_COMPACT = SPIDER_LOGO;
 
 /** Legacy export retained for existing UI integrations. */

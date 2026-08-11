@@ -251,12 +251,12 @@ export class ProviderAuthFlows {
 		const options: AuthSelectorProvider[] = oauthProviders
 			.filter((provider) => provider.id !== PRIME_INFERENCE_PROVIDER_ID)
 			.map((provider) => ({
-			id: provider.id,
-			name: provider.name,
-			authType: "oauth",
-			// MCP integrations (mcp:<server>) are services, not model providers.
-			...(provider.id.startsWith("mcp:") ? { category: "service" as const } : {}),
-		}));
+				id: provider.id,
+				name: provider.name,
+				authType: "oauth",
+				// MCP integrations (mcp:<server>) are services, not model providers.
+				...(provider.id.startsWith("mcp:") ? { category: "service" as const } : {}),
+			}));
 
 		const modelProviders = new Set(this.host.modelRegistry.getAll().map((model) => model.provider));
 		for (const providerId of modelProviders) {
@@ -308,7 +308,6 @@ export class ProviderAuthFlows {
 				category: isSerper || isMcp ? "service" : "provider",
 			});
 		}
-
 
 		return options.sort((a, b) => a.name.localeCompare(b.name));
 	}

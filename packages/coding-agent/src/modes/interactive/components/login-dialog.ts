@@ -47,10 +47,7 @@ class PrimeLoginHeader implements Component {
 			...logoLines,
 			centeredLine("", safeWidth),
 			centeredLine(theme.bold(theme.fg("text", "Login to Dek Agent")), safeWidth),
-			centeredLine(
-				theme.fg("muted", "Connect your account to enable Dek Agent model access."),
-				safeWidth,
-			),
+			centeredLine(theme.fg("muted", "Connect your account to enable Dek Agent model access."), safeWidth),
 		];
 	}
 }

@@ -1741,21 +1741,9 @@ export class InteractiveMode {
 			return;
 		}
 
-		const splash = await this.showOnboardingSplash();
-		if (!splash) {
-			return;
-		}
-
-		splash.showProgress("Signing in to Prime Intellect...");
-		const authResult = await this.createAuthFlows().runPrimeInferenceLogin();
-		if (authResult.status !== "success") {
-			splash.dismiss();
-			return;
-		}
-
-		splash.showProgress("Preparing models...");
-		await this.prepareForModelSelectionAfterLogin(authResult);
-		await this.showOnboardingModelSelection(splash);
+		// No provider is configured yet. Open the normal model/provider picker;
+		// authentication options there intentionally exclude Prime Inference login.
+		await this.showConfigurationMenu("models");
 	}
 
 	private getMarkdownThemeWithSettings(): MarkdownTheme {

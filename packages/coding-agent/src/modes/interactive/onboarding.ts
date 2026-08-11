@@ -1,6 +1,5 @@
 import type { Api, Model } from "@earendil-works/pi-ai";
 import type { AuthStatus } from "../../core/auth-storage.js";
-import { PRIME_INFERENCE_PROVIDER_ID } from "../../core/prime-inference-auth.js";
 
 export interface OnboardingSettingsReader {
 	getOnboardingShown(): boolean;

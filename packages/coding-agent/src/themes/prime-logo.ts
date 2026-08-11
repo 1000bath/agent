@@ -1,18 +1,27 @@
 /**
- * Pre-rendered ASCII versions of the Prime butterfly mark.
+ * Pre-rendered block logo used by the interactive UI.
  *
- * Source: assets/brand/prime-butterfly.svg
- * Re-render at any width: `uv run scripts/render-logo.py --width N`
+ * Spider replacement for the inherited Prime butterfly mark.
+ * Keep the legacy export name for protocol/UI compatibility.
  */
 
-/** ~10 rows × 32 cols. The default brand mark — half-block butterfly, splash-ready. */
-export const SPIDER_LOGO = `                          ▄▄███▀
-    ▄▄▄▄▄              ▄█████▀
-    ██████▄         ▄██████▀
-   ▄███▀███▄     ▄███▀▄██▀
-   ███ ▄████▄▄▄████▀▄▄██
-  ▀██  ▀█████████▀▀▀▀▀▀
-  ▄██   ██████▀▀ ▄███
- █████    ▀█▄▄▄█████▀
-███████▄  ████████▀
-▀███▀▀    █████▀`;
+/** ~10 rows × 32 cols. Block-style spider logo. */
+export const SPIDER_LOGO = `  ▄▄                    ▄▄
+ ▄██▄                  ▄██▄
+  ▀██▄▄   ▄██████▄   ▄▄██▀
+    ▀██████████████████▀
+ ▄▄▄▄████  ▄████▄  ████▄▄▄▄
+█████████  ██████  █████████
+ ▀▀▀▀████  ▀████▀  ████▀▀▀▀
+    ▄██████████████████▄
+  ▄██▀  ▀███    ███▀  ▀██▄
+ ▀▀      ▀▀      ▀▀      ▀▀`;
+
+/** Compact block-style spider logo. */
+export const SPIDER_LOGO_COMPACT = ` ▄▄      ▄▄
+████████████
+ ████  ████
+  ▀▀████▀▀`;
+
+/** Backwards-compatible export used by existing interactive UI components. */
+export const PRIME_BUTTERFLY_LOGO = SPIDER_LOGO;

@@ -11,7 +11,7 @@ npm ci
 Run from source against a separate working directory:
 
 ```bash
-/path/to/dek-agent/dek-agent.sh
+/path/to/agent/spider-agent.sh
 ```
 
 ## Validation

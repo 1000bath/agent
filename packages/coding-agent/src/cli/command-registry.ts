@@ -1,4 +1,4 @@
-import { APP_NAME } from "../config.js";
+import { APP_NAME, PRODUCT_NAME } from "../config.js";
 
 export interface CommandSpec {
 	path: readonly string[];
@@ -286,7 +286,7 @@ export function formatTopLevelHelp(): string {
 	const commands = COMMAND_SPECS.filter((spec) => spec.path.length === 1);
 	const commandWidth = Math.max(...commands.map((spec) => spec.path[0]!.length));
 	const options = TOP_LEVEL_OPTION_GROUPS.map((group) => formatOptionGroup(group.heading, group.options)).join("\n\n");
-	return `${APP_NAME} - AI coding assistant with an IPython tool
+	return `${PRODUCT_NAME} (${APP_NAME}) - AI coding assistant with an IPython tool
 
 Usage:
   ${APP_NAME} [options] [@files...] [message...]

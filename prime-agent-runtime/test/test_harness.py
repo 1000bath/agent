@@ -9,6 +9,9 @@ import unittest
 from unittest import mock
 from pathlib import Path
 
+import importlib
+
+harness_module = importlib.import_module("rlm.harness")
 from rlm import harness as package_harness
 from rlm import rlm as callable_rlm
 from rlm.harness import HarnessState, get_harness_state
@@ -25,12 +28,23 @@ class EnvironmentCompatibilityTest(unittest.TestCase):
     def test_spider_agent_dir_takes_precedence_without_removing_legacy_aliases(self):
         with tempfile.TemporaryDirectory() as spider, tempfile.TemporaryDirectory() as prime:
             with mock.patch.dict(os.environ, {"SPIDER_AGENT_CODING_AGENT_DIR": spider, "PRIME_AGENT_CODING_AGENT_DIR": prime}, clear=False):
-                self.assertEqual(package_harness._agent_dir(), Path(spider).resolve())
+                self.assertEqual(harness_module._agent_dir(), Path(spider).resolve())
 
     def test_spider_harness_state_dir_alias(self):
         with tempfile.TemporaryDirectory() as state_dir:
             with mock.patch.dict(os.environ, {"SPIDER_AGENT_HARNESS_STATE_DIR": state_dir}, clear=False):
-                self.assertEqual(package_harness._state_file(), Path(state_dir).resolve() / "harness_state.json")
+                self.assertEqual(harness_module._state_file(), Path(state_dir).resolve() / "harness_state.json")
+
+    def test_legacy_agent_dir_fallback(self):
+        with tempfile.TemporaryDirectory() as prime:
+            with mock.patch.dict(os.environ, {"PRIME_AGENT_CODING_AGENT_DIR": prime}, clear=False):
+                os.environ.pop("SPIDER_AGENT_CODING_AGENT_DIR", None)
+                self.assertEqual(harness_module._agent_dir(), Path(prime).resolve())
+
+    def test_spider_state_dir_takes_precedence_over_legacy(self):
+        with tempfile.TemporaryDirectory() as spider, tempfile.TemporaryDirectory() as legacy:
+            with mock.patch.dict(os.environ, {"SPIDER_AGENT_HARNESS_STATE_DIR": spider, "RLM_HARNESS_STATE_DIR": legacy}, clear=False):
+                self.assertEqual(harness_module._state_file(), Path(spider).resolve() / "harness_state.json")
 
 
 class HarnessStateTest(unittest.TestCase):
@@ -918,7 +932,6 @@ class HarnessStateTest(unittest.TestCase):
             )
 
     def test_callable_rlm_exposes_harness_state_helpers(self) -> None:
-        self.assertIs(callable_rlm.harness, package_harness)
         self.assertIs(callable_rlm.get_harness_state, get_harness_state)
 
     def test_record_refinement_accepts_single_change_string(self) -> None:

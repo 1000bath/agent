@@ -1,4 +1,4 @@
-# Dek Agent Architecture
+# Spider Agent Architecture
 
 ## Responsibilities
 

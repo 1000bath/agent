@@ -36,7 +36,8 @@ def _slug(raw: str, fallback: str) -> str:
 
 def _agent_dir() -> Path:
     raw = (
-        os.environ.get("PRIME_AGENT_CODING_AGENT_DIR")
+        os.environ.get("SPIDER_AGENT_CODING_AGENT_DIR")
+        or os.environ.get("PRIME_AGENT_CODING_AGENT_DIR")
         or os.environ.get("PI_CODING_AGENT_DIR")
         or str(Path.home() / ".prime" / "agent")
     )
@@ -77,7 +78,11 @@ def _env_dir(name: str) -> str | None:
 def _state_file(state_dir: str | Path | None = None, *, global_: bool = False) -> Path:
     root: str | Path | None = state_dir
     if root is None:
-        root = _env_dir("RLM_GLOBAL_HARNESS_STATE_DIR") if global_ else _env_dir("RLM_HARNESS_STATE_DIR")
+        root = (
+            (_env_dir("SPIDER_AGENT_GLOBAL_HARNESS_STATE_DIR") or _env_dir("RLM_GLOBAL_HARNESS_STATE_DIR"))
+            if global_
+            else (_env_dir("SPIDER_AGENT_HARNESS_STATE_DIR") or _env_dir("RLM_HARNESS_STATE_DIR"))
+        )
     if root is None and not global_ and (session_dir := _env_dir("RLM_SESSION_DIR")):
         root = Path(session_dir) / _DEFAULT_HARNESS_DIR_NAME
     if root is None and not global_:

@@ -9,7 +9,7 @@
 </p>
 
 <h3 align="center">
-Dek Agent: A Self-Improving RLM Agent
+Spider Agent: A Self-Improving RLM Agent
 </h3>
 
 <p align="center">
@@ -28,12 +28,12 @@ Dek Agent: A Self-Improving RLM Agent
   </a>
 </p>
 
-Dek Agent is an open-source coding and research agent for general and long-running work. It is designed around two core abstractions:
+Spider Agent is an open-source coding and research agent for general and long-running work. It is designed around two core abstractions:
 
 - The **[Recursive Language Model (RLM)](https://www.primeintellect.ai/blog/rlm)** treats context as variables (*prompt-as-a-variable*) and tools like recursive subagents as function calls (*programmatic tool /sub-agent calling*) inside a persistent REPL.
-- The **[Continual Harness](https://arxiv.org/abs/2605.09998)** stores supplemental prompts, memories, skill descriptions, and reusable subagent specifications as durable state that Dek Agent can refine through small, evidence-backed updates, local to the session by default.
+- The **[Continual Harness](https://arxiv.org/abs/2605.09998)** stores supplemental prompts, memories, skill descriptions, and reusable subagent specifications as durable state that Spider Agent can refine through small, evidence-backed updates, local to the session by default.
 
-Dek Agent combines a persistent Python control environment with durable harness state, so useful working context and reusable operating patterns can outlive a single chat window.
+Spider Agent combines a persistent Python control environment with durable harness state, so useful working context and reusable operating patterns can outlive a single chat window.
 
 - **Everything is programmatic:** persistent IPython is the built-in model tool; file operations, shell commands, tool use, subagents, and context management happen through code.
 - **Subagents are built in:** `rlm(...)` spawns real child agents for parallel or background work and returns their results programmatically.
@@ -53,17 +53,17 @@ curl -fsSL https://app.primeintellect.ai/prime-agent/install.sh | sh
 
 The installer downloads a versioned release, verifies its SHA-256 checksum, installs the `dek-agent` command, and can prepare the IPython runtime used by the agent.
 
-Start Dek Agent from the repository or directory you want it to work in:
+Start Spider Agent from the repository or directory you want it to work in:
 
 ```bash
 cd /path/to/project
 dek-agent
 ```
 
-On first launch, run `/login` to choose a subscription or API-key provider. Dek Agent works in the current directory and can run commands and modify files there. Use a disposable clone, clean worktree, or another checkpoint you can inspect and restore.
+On first launch, run `/login` to choose a subscription or API-key provider. Spider Agent works in the current directory and can run commands and modify files there. Use a disposable clone, clean worktree, or another checkpoint you can inspect and restore.
 
 > [!WARNING]
-> Dek Agent executes model-generated Python and project commands with your user permissions. Its worker and kernel processes improve lifecycle isolation and recovery; they are **not** a security sandbox. Review changes and use trusted repositories, instructions, skills, and extensions only. Run untrusted code or instructions in an external sandbox or restricted environment.
+> Spider Agent executes model-generated Python and project commands with your user permissions. Its worker and kernel processes improve lifecycle isolation and recovery; they are **not** a security sandbox. Review changes and use trusted repositories, instructions, skills, and extensions only. Run untrusted code or instructions in an external sandbox or restricted environment.
 
 Useful commands:
 
@@ -73,13 +73,13 @@ dek-agent attach <agent>           # Reattach to a running session
 dek-agent --resume <path|id>       # Resume a saved session
 dek-agent status                   # Inspect background service state
 dek-agent doctor [--fix]           # Inspect or repair background services
-dek-agent update [--force]         # Update Dek Agent
+dek-agent update [--force]         # Update Spider Agent
 dek-agent shutdown [--force]       # Stop every agent, worker, and background service
 ```
 
 ## Dek Integration
 
-This repository is maintained as the Dek Agent runtime, based on the upstream Prime Agent implementation. The surrounding Dek packages are kept separate:
+This repository is maintained as the Spider Agent runtime, based on the upstream Prime Agent implementation. The surrounding Dek packages are kept separate:
 
 - `../dek-memory` — persistent hybrid memory and retrieval
 - `../dek-gateway` — provider routing and OpenAI-compatible gateway
@@ -87,7 +87,7 @@ This repository is maintained as the Dek Agent runtime, based on the upstream Pr
 Keep runtime changes inside this repository. Integrations with Dek services should use stable package interfaces rather than copying implementation files.
 
 ## Built for Long-Running Work
-Dek Agent is built for long-running work, especially for evaluations in research. These features are available in the TUI, and when run autonomously. 
+Spider Agent is built for long-running work, especially for evaluations in research. These features are available in the TUI, and when run autonomously.
 
 - **Continual Harness:** `/refine` can persist focused, reviewable lessons as supplemental prompts, memories, reusable skill descriptions, or subagent specifications, with recorded refinement history. It does not replace packaging and reviewing new executable skills.
 - **Direct agent-to-agent communication:** running agents and retained subagents can discover one another, exchange messages, and steer active work.
@@ -114,4 +114,4 @@ Our agent and TUI is built on top of [`pi`](https://github.com/earendil-works/pi
 
 ## License
 
-Dek Agent is fully open source and released under the [MIT License](LICENSE).
+Spider Agent is fully open source and released under the [MIT License](LICENSE).

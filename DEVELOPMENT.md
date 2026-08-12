@@ -1,6 +1,6 @@
-# Dek Agent Development
+# Spider Agent Development
 
-Dek Agent is the CLI, TUI, daemon, RLM runtime, tools, skills, and continual-harness composition root.
+Spider Agent is the CLI, TUI, daemon, RLM runtime, tools, skills, and continual-harness composition root.
 
 ## Setup
 
@@ -24,4 +24,4 @@ Follow `AGENTS.md` before changing code. Run focused tests from the relevant wor
 
 ## Compatibility
 
-User-facing branding is Dek Agent. Existing `PRIME_AGENT_*` environment variables, `.prime/agent` storage, daemon protocol identifiers, ACP metadata, MIME types, and session formats remain compatibility surfaces until an explicit migration is implemented.
+User-facing branding is Spider Agent. Existing `PRIME_AGENT_*` environment variables, `.prime/agent` storage, daemon protocol identifiers, ACP metadata, MIME types, and session formats remain compatibility surfaces until an explicit migration is implemented.

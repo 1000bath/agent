@@ -6,6 +6,7 @@ import subprocess
 import sys
 import tempfile
 import unittest
+from unittest import mock
 from pathlib import Path
 
 from rlm import harness as package_harness
@@ -18,6 +19,18 @@ PYTHON_REFERENCE = {
     "callable": "run",
     "call_pattern": "await run(...)",
 }
+
+
+class EnvironmentCompatibilityTest(unittest.TestCase):
+    def test_spider_agent_dir_takes_precedence_without_removing_legacy_aliases(self):
+        with tempfile.TemporaryDirectory() as spider, tempfile.TemporaryDirectory() as prime:
+            with mock.patch.dict(os.environ, {"SPIDER_AGENT_CODING_AGENT_DIR": spider, "PRIME_AGENT_CODING_AGENT_DIR": prime}, clear=False):
+                self.assertEqual(package_harness._agent_dir(), Path(spider).resolve())
+
+    def test_spider_harness_state_dir_alias(self):
+        with tempfile.TemporaryDirectory() as state_dir:
+            with mock.patch.dict(os.environ, {"SPIDER_AGENT_HARNESS_STATE_DIR": state_dir}, clear=False):
+                self.assertEqual(package_harness._state_file(), Path(state_dir).resolve() / "harness_state.json")
 
 
 class HarnessStateTest(unittest.TestCase):

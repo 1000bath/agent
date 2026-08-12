@@ -123,7 +123,7 @@ export const COMMAND_SPECS: readonly CommandSpec[] = [
 	{
 		path: ["update"],
 		usage: "update [--force]",
-		summary: "Update Dek Agent",
+		summary: "Update Spider Agent",
 	},
 	{
 		path: ["model"],

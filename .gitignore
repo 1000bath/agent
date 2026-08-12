@@ -43,3 +43,6 @@ collect.sh
 
 __pycache__/
 *.pyc
+
+# Local CodeGraph index (regenerable, machine-specific)
+.codegraph/

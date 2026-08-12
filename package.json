@@ -31,7 +31,8 @@
     "release:patch": "node scripts/release.mjs patch",
     "release:minor": "node scripts/release.mjs minor",
     "release:major": "node scripts/release.mjs major",
-    "prepare": "husky"
+    "prepare": "husky",
+    "check:ci": "biome check --error-on-warnings . && tsgo --noEmit && npm run check:installer && npm run check:browser-smoke"
   },
   "devDependencies": {
     "@anthropic-ai/sandbox-runtime": "^0.0.55",

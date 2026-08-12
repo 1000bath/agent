@@ -30,6 +30,14 @@ python3 scripts/web_research.py fetch "https://example.com/docs" --max-chars 120
 
 The fetcher accepts HTML, Markdown, JSON, and plain text, removes scripts/styles/navigation noise from HTML, and emits the canonical URL plus extracted text.
 
+## Scrape structured content
+
+```bash
+python3 scripts/web_research.py scrape "https://example.com" --tag article --max-items 20 --timeout 20
+```
+
+Use `--tag p`, `--tag h2`, `--tag a`, or `--tag article` to extract bounded page elements. This is for public pages only; respect robots.txt, terms of service, rate limits, and copyright. Do not bypass authentication, CAPTCHAs, paywalls, or access controls.
+
 ## Workflow
 
 1. Search with a precise query and collect 3–5 independent sources.

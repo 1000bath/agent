@@ -1,4 +1,6 @@
-import { APP_NAME, PRODUCT_NAME } from "../config.js";
+import { APP_NAME } from "../config.js";
+
+const PRODUCT_NAME = "Spider Agent";
 
 export interface CommandSpec {
 	path: readonly string[];

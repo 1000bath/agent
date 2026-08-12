@@ -4,13 +4,14 @@
 	"description": "Coding agent CLI with IPython-backed tools and session management",
 	"type": "module",
 	"piConfig": {
-		"name": "spider-agent",
+		"name": "copider-code",
 		"configDir": ".prime/agent"
 	},
 	"bin": {
 		"pi": "dist/bundle/cli.js",
 		"dek-agent": "dist/bundle/cli.js",
-		"spider-agent": "dist/bundle/cli.js"
+		"spider-agent": "dist/bundle/cli.js",
+		"copider-code": "dist/bundle/cli.js"
 	},
 	"main": "./dist/index.js",
 	"types": "./dist/index.d.ts",

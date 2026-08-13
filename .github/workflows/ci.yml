@@ -11,7 +11,7 @@ permissions:
 jobs:
   check:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 30
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -24,8 +24,17 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y --no-install-recommends build-essential libcairo2-dev libpango1.0-dev libjpeg-dev libgif-dev librsvg2-dev libpixman-1-dev pkg-config
+      # The kernel tests provision a Python runtime through uv; without it they
+      # fail with "uv is required to set up the Python kernel".
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
       - run: npm ci
       - run: npm run check:ci
+      # Workspace packages resolve through node_modules symlinks to their dist/
+      # output. Without a build there is no dist, so anything that imports
+      # @earendil-works/pi-agent-core at runtime fails to load — which took out
+      # the whole extensions and resource-loader suite.
+      - run: npm run build
       - run: npm test
 
   python-tests:

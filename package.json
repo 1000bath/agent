@@ -1,5 +1,5 @@
 {
-  "name": "agent",
+  "name": "toolrig",
   "private": true,
   "type": "module",
   "workspaces": [

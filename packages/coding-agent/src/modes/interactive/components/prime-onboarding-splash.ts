@@ -1,7 +1,7 @@
 import { type Component, getKeybindings, truncateToWidth, visibleWidth } from "@earendil-works/pi-tui";
+import { APP_TITLE } from "../../../config.js";
 import { SPIDER_LOGO } from "../../../themes/prime-logo.js";
 import { type ThemeColor, theme } from "../theme/theme.js";
-import { APP_TITLE } from "../../../config.js";
 
 interface PrimeOnboardingSplashOptions {
 	getRows?: () => number;

@@ -18,6 +18,12 @@ jobs:
         with:
           node-version: 24
           cache: npm
+      # packages/ai pulls in `canvas`, which builds from source and needs
+      # cairo/pango/pixman headers that the runner image does not ship.
+      - name: Install native build dependencies for canvas
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends build-essential libcairo2-dev libpango1.0-dev libjpeg-dev libgif-dev librsvg2-dev libpixman-1-dev pkg-config
       - run: npm ci
       - run: npm run check:ci
       - run: npm test

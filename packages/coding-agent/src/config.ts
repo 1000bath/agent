@@ -483,21 +483,61 @@ interface PackageJson {
 const pkg = JSON.parse(readFileSync(getPackageJsonPath(), "utf-8")) as PackageJson;
 
 const piConfigName: string | undefined = pkg.piConfig?.name;
-const envPrefix =
+
+/**
+ * Prefix for this package's environment variables.
+ *
+ * CONTRACT: pinned, and deliberately NOT derived from `piConfig.name`.
+ *
+ * It used to be derived, which meant every rebrand silently renamed every
+ * environment variable underneath users: PRIME_AGENT_SESSION_DIR became
+ * SPIDER_AGENT_SESSION_DIR became COPIDER_CODE_SESSION_DIR, and an env var
+ * someone had exported in their shell profile simply stopped being read. That
+ * contradicts REBRAND_MIGRATION.md ("PRIME_AGENT_* ... remain valid", "no
+ * existing runtime or protocol identifier is renamed"), and it made these three
+ * variables the only ones in the codebase that move — every other
+ * `process.env.PRIME_AGENT_*` read is a hardcoded literal.
+ *
+ * The display name is free to change. This is not.
+ */
+const ENV_PREFIX = "PRIME_AGENT";
+
+/** Prefix derived from the current branding — accepted on read, never written. */
+const brandEnvPrefix =
 	(piConfigName || "pi")
 		.toUpperCase()
 		.replace(/[^A-Z0-9]+/g, "_")
 		.replace(/^_+|_+$/g, "") || "PI";
+
+/**
+ * Every prefix accepted when reading, contract first.
+ *
+ * The brand-derived prefix and the prefixes shipped by earlier rebrands stay
+ * readable so anyone who picked them up in the interim keeps working.
+ */
+const ENV_READ_PREFIXES: readonly string[] = [
+	...new Set([ENV_PREFIX, brandEnvPrefix, "SPIDER_AGENT", "COPIDER_CODE", "PI"]),
+];
+
+/** Read `<prefix>_<suffix>` across every accepted prefix, contract first. */
+function readPrefixedEnv(suffix: string): string | undefined {
+	for (const prefix of ENV_READ_PREFIXES) {
+		const value = process.env[`${prefix}_${suffix}`];
+		if (value) return value;
+	}
+	return undefined;
+}
 export const PACKAGE_NAME: string = pkg.name || "@earendil-works/pi-coding-agent";
 export const APP_NAME: string = piConfigName || "pi";
 export const APP_TITLE: string = piConfigName ? APP_NAME : "π";
 export const CONFIG_DIR_NAME: string = pkg.piConfig?.configDir || ".prime/agent";
 export const VERSION: string = pkg.version || "0.0.0";
 
-// e.g., PI_CODING_AGENT_DIR or PRIME_AGENT_CODING_AGENT_DIR
-export const ENV_AGENT_DIR = `${envPrefix}_CODING_AGENT_DIR`;
-export const ENV_SESSION_DIR = `${envPrefix}_SESSION_DIR`;
-export const ENV_LEGACY_SESSION_DIR = `${envPrefix}_CODING_AGENT_SESSION_DIR`;
+// The canonical names. Reads also accept the brand-derived and legacy prefixes
+// via readPrefixedEnv; writes always use these.
+export const ENV_AGENT_DIR = `${ENV_PREFIX}_CODING_AGENT_DIR`;
+export const ENV_SESSION_DIR = `${ENV_PREFIX}_SESSION_DIR`;
+export const ENV_LEGACY_SESSION_DIR = `${ENV_PREFIX}_CODING_AGENT_SESSION_DIR`;
 
 export function expandTildePath(path: string): string {
 	if (path === "~") return homedir();
@@ -519,7 +559,7 @@ export function getShareViewerUrl(gistId: string): string {
 
 /** Get the agent config directory (e.g., ~/.prime/agent/) */
 export function getAgentDir(): string {
-	const envDir = process.env[ENV_AGENT_DIR];
+	const envDir = readPrefixedEnv("CODING_AGENT_DIR");
 	if (envDir) {
 		return expandTildePath(envDir);
 	}
@@ -641,7 +681,7 @@ export function getSessionsDir(agentDir: string = getAgentDir()): string {
 }
 
 export function getSessionDirEnvOverride(): string | undefined {
-	const envDir = process.env[ENV_SESSION_DIR] ?? process.env[ENV_LEGACY_SESSION_DIR];
+	const envDir = readPrefixedEnv("SESSION_DIR") ?? readPrefixedEnv("CODING_AGENT_SESSION_DIR");
 	return envDir ? expandTildePath(envDir) : undefined;
 }
 

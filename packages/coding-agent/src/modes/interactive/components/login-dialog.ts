@@ -13,6 +13,7 @@ import {
 	visibleWidth,
 } from "@earendil-works/pi-tui";
 import { execFile } from "child_process";
+import { APP_TITLE } from "../../../config.js";
 import { SPIDER_LOGO } from "../../../themes/prime-logo.js";
 import { theme } from "../theme/theme.js";
 import { keyHint } from "./keybinding-hints.js";
@@ -46,7 +47,7 @@ class PrimeLoginHeader implements Component {
 		return [
 			...logoLines,
 			centeredLine("", safeWidth),
-			centeredLine(theme.bold(theme.fg("text", "Login to Spider Agent")), safeWidth),
+			centeredLine(theme.bold(theme.fg("text", `Login to ${APP_TITLE}`)), safeWidth),
 			centeredLine(theme.fg("muted", "Connect your account to enable Spider Agent model access."), safeWidth),
 		];
 	}

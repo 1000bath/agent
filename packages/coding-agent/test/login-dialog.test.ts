@@ -1,6 +1,7 @@
 import { resetCapabilitiesCache, setCapabilities, type TUI, visibleWidth } from "@earendil-works/pi-tui";
 import stripAnsi from "strip-ansi";
 import { afterEach, beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
+import { APP_TITLE } from "../src/config.js";
 import { LoginDialogComponent } from "../src/modes/interactive/components/login-dialog.js";
 import { initTheme } from "../src/modes/interactive/theme/theme.js";
 import { PRIME_BUTTERFLY_LOGO } from "../src/themes/prime-logo.js";
@@ -105,7 +106,7 @@ describe("LoginDialogComponent", () => {
 		const output = stripAnsi(dialog.render(88).join("\n"));
 		const firstLogoLine = PRIME_BUTTERFLY_LOGO.split("\n")[0]?.trim() ?? "";
 
-		expect(output).toContain("Login to Prime Inference");
+		expect(output).toContain(`Login to ${APP_TITLE}`);
 		expect(output).toContain(firstLogoLine);
 		expect(output).toContain("Verification code");
 		expect(output).toContain("abc-123");
@@ -124,17 +125,19 @@ describe("LoginDialogComponent", () => {
 		expect(output).not.toContain("Status");
 	});
 
-	it("keeps the Prime Inference brand header centered and within the panel", () => {
+	it("keeps the brand header centered and within the panel", () => {
 		const dialog = new LoginDialogComponent(createFakeTui(), "prime-inference", () => {}, "Prime Inference");
 
 		dialog.showProgress("Checking existing Prime CLI credentials...");
 		const lines = dialog.render(88);
 		const output = stripAnsi(lines.join("\n"));
-		const titleLine = output.split("\n").find((line) => line.includes("Login to Prime Inference"));
-		const titleOffset = titleLine?.indexOf("Login to Prime Inference") ?? -1;
+		const titleLine = output.split("\n").find((line) => line.includes(`Login to ${APP_TITLE}`));
+		const titleOffset = titleLine?.indexOf(`Login to ${APP_TITLE}`) ?? -1;
 
 		expect(titleOffset).toBeGreaterThan(20);
-		expect(output).toContain("Connect your Prime Intellect account to enable Prime Inference models.");
+		// The Prime Inference panel dropped its title/subtitle text in favour of
+		// the logo above the heading, so assert the logo rather than the old copy.
+		expect(output).toContain(PRIME_BUTTERFLY_LOGO.split("\n")[0]?.trim() ?? "");
 		expect(output).toContain("Preparing authentication");
 		for (const line of lines) {
 			expect(visibleWidth(line)).toBe(88);

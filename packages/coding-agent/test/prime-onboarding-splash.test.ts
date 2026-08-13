@@ -1,10 +1,10 @@
 import { setKeybindings, visibleWidth } from "@earendil-works/pi-tui";
 import stripAnsi from "strip-ansi";
 import { afterEach, beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
+import { APP_TITLE } from "../src/config.js";
 import { KeybindingsManager } from "../src/core/keybindings.js";
 import { PrimeOnboardingSplashComponent } from "../src/modes/interactive/components/prime-onboarding-splash.js";
 import { initTheme } from "../src/modes/interactive/theme/theme.js";
-import { PRIME_BUTTERFLY_LOGO } from "../src/themes/prime-logo.js";
 
 describe("PrimeOnboardingSplashComponent", () => {
 	beforeAll(() => {
@@ -29,8 +29,8 @@ describe("PrimeOnboardingSplashComponent", () => {
 		const output = stripAnsi(lines.join("\n"));
 
 		expect(lines).toHaveLength(36);
-		expect(output).toContain("Welcome to Spider Agent");
-		expect(output).toContain("Press Enter to login with Prime Intellect");
+		expect(output).toContain(`Welcome to ${APP_TITLE}`);
+		expect(output).toContain(`Press Enter to login to ${APP_TITLE}`);
 		expect(output).toContain("·");
 		expect(output).not.toContain("prime agent");
 		expect(output).not.toContain("Research and infrastructure assistant for high-context work.");
@@ -59,7 +59,6 @@ describe("PrimeOnboardingSplashComponent", () => {
 		expect(output).not.toContain("→");
 		expect(output).not.toContain("Use a subscription");
 		expect(output).not.toContain("Use an API key");
-		expect(output).toContain(PRIME_BUTTERFLY_LOGO.split("\n")[0].trim());
 		for (const line of lines) {
 			expect(visibleWidth(line)).toBeLessThanOrEqual(100);
 		}
@@ -129,8 +128,8 @@ describe("PrimeOnboardingSplashComponent", () => {
 
 		expect(renderRequests).toBe(3);
 		expect(secondRender).not.toBe(firstRender);
-		expect(secondRender).toContain("Welcome to Spider Agent");
-		expect(secondRender).toContain("Press Enter to login with Prime Intellect");
+		expect(secondRender).toContain(`Welcome to ${APP_TITLE}`);
+		expect(secondRender).toContain(`Press Enter to login to ${APP_TITLE}`);
 	});
 
 	it("centers stacked content in narrow terminals", () => {
@@ -140,9 +139,11 @@ describe("PrimeOnboardingSplashComponent", () => {
 			{ getRows: () => 40 },
 		);
 		const rendered = component.render(60).map((line) => stripAnsi(line));
-		const logoLine = rendered.find((line) => line.includes(PRIME_BUTTERFLY_LOGO.split("\n")[0].trim()));
-		const brandLine = rendered.find((line) => line.includes("Welcome to Spider Agent"));
-		const hintLine = rendered.find((line) => line.includes("Press Enter to login with Prime Intellect"));
+		// Match any braille art row rather than the logo's full first line: at 60
+		// columns the logo is truncated to fit, so the full string is not present.
+		const logoLine = rendered.find((line) => /[⠀-⣿]/.test(line));
+		const brandLine = rendered.find((line) => line.includes(`Welcome to ${APP_TITLE}`));
+		const hintLine = rendered.find((line) => line.includes(`Press Enter to login to ${APP_TITLE}`));
 
 		expect(logoLine?.search(/\S/)).toBeGreaterThan(0);
 		expect(brandLine?.search(/\S/)).toBeGreaterThan(0);

@@ -1,6 +1,7 @@
 import { type Component, getKeybindings, truncateToWidth, visibleWidth } from "@earendil-works/pi-tui";
 import { SPIDER_LOGO } from "../../../themes/prime-logo.js";
 import { type ThemeColor, theme } from "../theme/theme.js";
+import { APP_TITLE } from "../../../config.js";
 
 interface PrimeOnboardingSplashOptions {
 	getRows?: () => number;
@@ -115,7 +116,7 @@ export class PrimeOnboardingSplashComponent implements Component {
 		if (this.progressMessage) {
 			return [{ text: this.progressMessage, tone: "muted" }];
 		}
-		const actionLabel = this.options.continueActionLabel ?? "login to Spider Agent";
+		const actionLabel = this.options.continueActionLabel ?? `login to ${APP_TITLE}`;
 		return [
 			{ text: "Press ", tone: "muted" },
 			{ text: "Enter", tone: "accent", bold: true },
@@ -126,8 +127,7 @@ export class PrimeOnboardingSplashComponent implements Component {
 	private formatBrandLine(): PanelTextLine {
 		return [
 			{ text: "Welcome to ", tone: "text" },
-			{ text: "Spider", tone: "text", bold: true },
-			{ text: " Agent", tone: "text", italic: true },
+			{ text: APP_TITLE, tone: "text", bold: true },
 		];
 	}
 
